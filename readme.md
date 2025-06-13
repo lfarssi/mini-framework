@@ -13,3 +13,23 @@ to do in this project :
 | ⚠️ Smarter DOM updates  | 💡 Optional but ideal            |
 ✅
 ❌
+
+
+the structure of the framwork :
+MINI-FRAMEWORK
+ ┣ public
+ ┃  ┣ resources
+ ┃  ┃  ┗ styles
+ ┃  ┃     ┗ index.css
+ ┃  ┣ scripts
+ ┃  ┃  ┣ app.js
+ ┃  ┃  ┗ miniframwork.js
+ ┃  ┗ index.html
+ ┣ .gitignore
+ ┣ readme.md
+ ┗ server.js
+ 
+ for now this is the struct of the framework the puplic consist of the scripts and resources 
+ - scripts have the framwork script and the app is for the todolist 
+ - resources for styles images 
+ - ive deleted the server.js because its for the node to serve the frmawork not now !!!
