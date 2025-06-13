@@ -5,12 +5,13 @@ to do in this project :
 | ----------------------- | -------------------------------- |
 | ❌ TodoMVC example       | making to do list with minifra  |
 | ❌ JSX-style DOM         | styling the elemnts using our fr|
-| ❌ State (`useState`)    | add usestate hooks              |
-| ❌ Effects (`useEffect`) | adding useEffect hooks          |
+| ✅ State (`useState`)    | add usestate hooks              |
+| ✅ Effects (`useEffect`) | adding useEffect hooks          |
 | ❌ Routing               | 🔧 Add `useRoute()` or similar   |
 | ❌ Custom Event System   | 🔧 Add `on()` / `emit()` pattern |
 | ❌ Documentation         | 📝 Add `README.md`               |
 | ⚠️ Smarter DOM updates  | 💡 Optional but ideal            |
+must add  hoock cleanup global function instead of each hook 
 ✅
 ❌
 
@@ -184,3 +185,60 @@ So yes — it’s **a working minimal version** of `useState`. Very useful for l
 
 ---
 
+
+### 🔧 `UseEffect(callback, dependencies)`
+
+**Purpose:**
+`UseEffect` lets you run side effects in your app (like data fetching, timers, DOM manipulation) **when certain data changes** — just like React’s `useEffect`.
+
+---
+
+### 📌 How It Works:
+
+* Keeps track of all effects and their **dependencies**.
+* Only runs `callback()` **when dependencies change**.
+* Supports **cleanup functions** to remove or reset side effects before running the effect again.
+
+---
+
+### 🧠 Internal Behavior:
+
+1. Compares current dependencies to the previous ones.
+2. If dependencies have changed:
+
+   * Runs the previous cleanup function (if provided).
+   * Executes the new effect (`callback()`).
+   * Stores the new cleanup (if the callback returns one).
+3. Updates the internal list of dependencies for the next render.
+4. `effectIndex` ensures each `UseEffect` call is tracked correctly and separately.
+
+---
+
+### 🧽 Cleanup Function:
+
+You can return a function from the `callback` to **clean up** before re-running the effect or when the component "unmounts".
+
+---
+
+### ✅ Usage Example:
+
+```js
+UseEffect(() => {
+    const interval = setInterval(() => {
+        console.log("Running...");
+    }, 1000);
+
+    return () => {
+        clearInterval(interval);
+        console.log("Cleanup before re-run");
+    };
+}, [someState]);
+```
+
+---
+
+### 🔁 Important:
+
+Call `ResetEffectIndex()` **once before each render**, to reset the internal pointer (`effectIndex`), ensuring effects run in the right order.
+
+---
