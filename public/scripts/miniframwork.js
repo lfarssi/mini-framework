@@ -1,20 +1,34 @@
-    const MiniFramwork=(function(){
-        function UseEffect(){
+const MiniFramwork = (function () {
+    let state = [];
+    let stateIndex = 0;
+    function UseState(initialValue) {
 
-        };
-        function UseState(){
+        const currentIndex = stateIndex;
 
-        };
-        function Jsx(){
+        if (state[currentIndex] === undefined) {
+            state[currentIndex] = initialValue;
+        } 
+        function setState(newValue) {
+            state[currentIndex] = newValue
+            Render()
 
-        };
-        function CreateElement(){
+        }
+        stateIndex++;
+        return [state[currentIndex], setState]
+    };
+    function UseEffect() {
 
-        };
-        function Render(){
+    };
+    function Jsx() {
 
-        };
-        return {UseEffect,UseState,Jsx,CreateElement,Render}
+    };
+    function CreateElement() {
 
-    })()
-    const {UseEffect,UseState,Jsx,CreateElement,Render}=MiniFramwork
+    };
+    function Render() {
+
+    };
+    return { UseEffect, UseState, Jsx, CreateElement, Render }
+
+})()
+const { UseEffect, UseState, Jsx, CreateElement, Render } = MiniFramwork
