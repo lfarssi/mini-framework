@@ -16,7 +16,9 @@ to do in this project :
 
 
 the structure of the framwork :
+
 MINI-FRAMEWORK
+
  ┣ public
  ┃  ┣ resources
  ┃  ┃  ┗ styles
@@ -28,6 +30,7 @@ MINI-FRAMEWORK
  ┣ .gitignore
  ┣ readme.md
  ┗ server.js
+
 
  for now this is the struct of the framework the puplic consist of the scripts and resources 
  - scripts have the framwork script and the app is for the todolist 
