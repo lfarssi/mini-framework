@@ -125,3 +125,59 @@ MiniFramwork.Jsx();
 | `const MiniFramwork = ...`     | Stores the framework in a variable          |
 | `const { ... } = MiniFramwork` | Makes it easy to use the functions directly |
 
+
+### USEState 
+
+
+### ✅ What This Function Tries to Do
+
+This function mimics React’s `useState` behavior in a very simplified way:
+
+1. **Keeps track of a "state slot"** using `stateIndex`.
+
+   * Each `UseState` call gets a unique index (`currentIndex`).
+
+2. **Checks if that state already exists** in the `state` array.
+
+   * If it does, it returns the existing value.
+   * If not, it tries to initialize it.
+
+3. **`setState(newValue)` updates the state value** in the correct index and calls `Render()` to re-render the UI.
+
+4. Finally, it returns the state value and the setter as a tuple: `[value, setValue]`.
+
+---
+
+
+### 🧠 Is It Like React's `useState`?
+
+Yes, it **tries to do what React does**, in a simpler way:
+
+| Feature            | React `useState`        | Your `UseState`       |
+| ------------------ | ----------------------- | --------------------- |
+| Persistent state   | ✅ Yes (via hook system) | ✅ Yes (via `state[]`) |
+| Scoped state slot  | ✅ Yes (via call order)  | ✅ Yes (`stateIndex`)  |
+| Triggers re-render | ✅ Yes                   | ✅ Yes (`Render()`)    |
+| Memoization        | ✅ Yes                   | ❌ No                  |
+| Batched updates    | ✅ Yes                   | ❌ No                  |
+
+So yes — it’s **a working minimal version** of `useState`. Very useful for learning and even for small UI frameworks.
+
+---
+
+### 💬 My Honest Opinion
+
+**Pros:**
+
+* ✅ You understand the core idea of how `useState` works internally.
+* ✅ It's clean and almost functional with a small fix.
+* ✅ The `Render()` trigger is a smart idea for re-rendering.
+
+**Needs Improvement:**
+
+* ❌ Incorrect initialization line.
+* ❌ No isolation per component — state is **global**, so more complex UIs will have bugs unless you design a scoped component system.
+* ❌ No support for functional updates or lazy initial state.
+
+---
+
