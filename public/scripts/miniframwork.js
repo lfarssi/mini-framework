@@ -34,6 +34,7 @@ const MiniFramwork = (function () {
 
     function UseEffect(callback, dependencies) {
         const oldDepend = effects[effectIndex]
+        const currentIndex=effectIndex
         let changed = true
         if (oldDepend) {
             changed = dependencies.some((dep, i) => !Object.is(dep, oldDepend[i]));
@@ -53,7 +54,7 @@ const MiniFramwork = (function () {
     }
     function Jsx(tags,props,...children) {
         if(typeof tags =="function"){
-            return {...props,children}
+            return tags({ ...props, children });
         }
         return {tags,props:props||{},children}
     };
@@ -62,6 +63,10 @@ const MiniFramwork = (function () {
             return document.createTextNode(node);
         }
         const element = document.createElement(node.tags);
+        
+  
+            
+        
         for (const [key, value] of Object.entries(node.props)) {
             if (key.startsWith('on') && typeof value === 'function') {
                 element.addEventListener(key.slice(2).toLowerCase(), value);
@@ -85,6 +90,16 @@ const MiniFramwork = (function () {
         return element;
     };
     function Render() {
+         stateIndex = 0;
+    effectIndex = 0;
+    const root = document.getElementById('root');
+    if(!root){
+        console.error("Root element not found")
+        return
+    }
+    root.innerHTML = '';
+    const app = App();
+    root.appendChild(CreateElement (app));
 
     };
     return { UseEffect, ResetHook, UseState, Jsx, CreateElement, Render }
