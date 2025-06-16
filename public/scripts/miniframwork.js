@@ -57,8 +57,32 @@ const MiniFramwork = (function () {
         }
         return {tags,props:props||{},children}
     };
-    function CreateElement() {
+    function CreateElement(node) {
+        if (typeof node === 'string'|| typeof node === 'number') {
+            return document.createTextNode(node);
+        }
+        const element = document.createElement(node.tags);
+        for (const [key, value] of Object.entries(node.props)) {
+            if (key.startsWith('on') && typeof value === 'function') {
+                element.addEventListener(key.slice(2).toLowerCase(), value);
+            } else if (key === 'className')  {
+                element.className = value;
+               
+            }else if (key=="id"){
+                element.id = value;
+            } else {
+                element.setAttribute(key, value);
+            }
+        }
+        for (let child of node.children.flat()){
+             if (typeof node === 'string'|| typeof node === 'number') {
+                element.appendChild(document.createTextNode(string(child)));
+            } else{
+            element.appendChild(CreateElement(child));
+            }
+        }
 
+        return element;
     };
     function Render() {
 
