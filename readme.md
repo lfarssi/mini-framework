@@ -242,3 +242,92 @@ UseEffect(() => {
 Call `ResetEffectIndex()` **once before each render**, to reset the internal pointer (`effectIndex`), ensuring effects run in the right order.
 
 ---
+
+
+### ✅ Purpose of the `Jsx` Function
+
+The `Jsx` function is a custom implementation of how **JSX (or JSX-like syntax)** is handled in your framework. It's similar to how React transforms JSX behind the scenes.
+
+#### In JSX, this:
+
+```jsx
+<App name="Fahd">Hello</App>
+```
+
+...gets compiled to something like:
+
+```js
+Jsx(App, { name: "Fahd" }, "Hello");
+```
+
+So the `Jsx` function is responsible for taking that output and converting it into something your framework can use.
+
+---
+
+### 🧠 How It Works
+
+```js
+function Jsx(tags, props, ...children) {
+    if (typeof tags === "function") {
+        return { ...props, children };
+    }
+    return { tags, props: props || {}, children };
+}
+```
+
+#### 🔹1. `tags`
+
+* Can be a **string** (like `"div"`, `"span"`), or a **function** (your own component like `App`, `Header`, etc.).
+
+#### 🔹2. `props`
+
+* An object of properties passed to the component (e.g. `{ name: "Fahd" }`).
+
+#### 🔹3. `...children`
+
+* Any nested children elements.
+
+---
+
+
+
+### 🧪 Example
+
+Let's say you use:
+
+```jsx
+const element = Jsx("div", { className: "box" }, "Hello");
+```
+
+Result:
+
+```js
+{
+  tags: "div",
+  props: { className: "box" },
+  children: ["Hello"]
+}
+```
+
+---
+
+###
+
+This is a **solid and minimal implementation** of a JSX factory. It’s:
+
+✅ Simple
+✅ Functional
+✅ Enough to support functional components and DOM elements.
+
+To make it even better, you could:
+
+* Normalize children (e.g., flatten arrays).
+* Support `fragments` (`<>...</>`).
+* Integrate with your `Render` logic to walk this tree and generate real DOM nodes.
+
+---
+
+### 📘 How to Document It
+
+> `Jsx(tag, props, ...children)` is a factory function that creates a virtual representation of an element or component. If `tag` is a string, it returns a virtual DOM node. If it's a function (a component), it returns the props and children to be passed to that component.
+
