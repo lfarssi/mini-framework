@@ -51,7 +51,7 @@ const MiniFramwork = (function () {
         effects[effectIndex] = dependencies
         effectIndex++
     }
-    function Jsx() {
+    function Jsx(tags,props,...children) {
 
     };
     function CreateElement() {
