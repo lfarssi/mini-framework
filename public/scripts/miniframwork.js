@@ -1,6 +1,18 @@
 const MiniFramwork = (function () {
     let state = [];
     let stateIndex = 0;
+
+
+    let effects = [];
+    let cleanups = [];
+    let effectIndex = 0;
+
+
+    function ResetHook() {
+        effectIndex = 0;
+        stateIndex = 0;
+    }
+
     function UseState(initialValue) {
 
         const currentIndex = stateIndex;
@@ -17,12 +29,9 @@ const MiniFramwork = (function () {
         return [state[currentIndex], setState]
     };
 
-    let effects = [];
-    let cleanups = [];
-    let effectIndex = 0;
-    function ResetEffectIndex() {
-        effectIndex = 0;
-    }
+
+
+
     function UseEffect(callback, dependencies) {
         const oldDepend = effects[effectIndex]
         let changed = true
@@ -51,10 +60,10 @@ const MiniFramwork = (function () {
     function Render() {
 
     };
-    return { UseEffect, ResetEffectIndex, UseState, Jsx, CreateElement, Render }
+    return { UseEffect, ResetHook, UseState, Jsx, CreateElement, Render }
 
 })()
-const { UseEffect, ResetEffectIndex, UseState, Jsx, CreateElement, Render } = MiniFramwork
+const { UseEffect, ResetHook, UseState, Jsx, CreateElement, Render } = MiniFramwork
 
 
 
